@@ -1,7 +1,7 @@
 resource "aws_vpc" "root_vpc" {
   cidr_block = "10.0.0.0/16"
   tags = {
-    type = "Root VPC"
+    Name = "Root VPC"
   }
 }
 
@@ -14,7 +14,7 @@ resource "aws_security_group" "alpha" {
 
 resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv4" {
     security_group_id = aws_security_group.alpha.id
-    cidr_ipv4         = aws_vpc.root_vpc.cidr_block
+    cidr_ipv4         = "0.0.0.0/0"
     from_port         = -1
     ip_protocol       = -1
     to_port           = -1
@@ -22,7 +22,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv4" {
 
 resource "aws_vpc_security_group_ingress_rule" "allow_tls_ICMP" {
     security_group_id = aws_security_group.alpha.id
-    cidr_ipv4         = aws_vpc.root_vpc.cidr_block
+    cidr_ipv4         = "0.0.0.0/0"
     from_port         = -1
     ip_protocol       = "icmp"
     to_port           = -1
@@ -30,7 +30,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_tls_ICMP" {
 
 resource "aws_vpc_security_group_egress_rule" "allow_tls_ipv4_out" {
     security_group_id = aws_security_group.alpha.id
-    cidr_ipv4         = aws_vpc.root_vpc.cidr_block
+    cidr_ipv4         = "0.0.0.0/0"
     from_port         = -1
     ip_protocol       = -1
     to_port           = -1
@@ -62,7 +62,7 @@ resource "aws_subnet" "private_sub_1" {
 resource "aws_internet_gateway" "myIGW" {
     vpc_id = aws_vpc.root_vpc.id
     tags = {
-        Name= "My Internet gateway"
+        Name = "My Internet gateway"
     }
 }
 
@@ -85,7 +85,7 @@ resource "aws_instance" "jump" {
     key_name = aws_key_pair.kp.key_name
     associate_public_ip_address = true
     tags =  {
-        type = "jump_server"
+        Name = "jump_server"
     }
 
 }
