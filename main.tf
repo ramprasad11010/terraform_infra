@@ -77,4 +77,22 @@ resource "aws_default_route_table" "root_route_table" {
     }
 }
 
+module "jump_Server" {
+    source = "./modules/EC2"
+    name = "Jump Server"
+    sg = aws_security_group.alpha.id
+    sub = aws_subnet.private_sub_1.id
+    key = aws_key_pair.kp.key_name
+
+}
+
+module "ansible_Server" {
+    source = "./modules/EC2"
+    name = "Ansible Server"
+    sg = aws_security_group.alpha.id
+    sub = aws_subnet.private_sub_1.id
+    key = aws_key_pair.kp.key_name
+
+}
+
 
