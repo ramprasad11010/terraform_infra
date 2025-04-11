@@ -77,16 +77,4 @@ resource "aws_default_route_table" "root_route_table" {
     }
 }
 
-resource "aws_instance" "jump" {
-    instance_type = "t2.micro"
-    ami = "ami-00a929b66ed6e0de6"
-    subnet_id = aws_subnet.private_sub_1.id
-    security_groups = [aws_security_group.alpha.id]
-    key_name = aws_key_pair.kp.key_name
-    associate_public_ip_address = true
-    tags =  {
-        Name = "jump_server"
-    }
-
-}
 
